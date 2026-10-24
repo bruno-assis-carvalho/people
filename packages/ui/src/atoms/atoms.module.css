@@ -1,0 +1,135 @@
+.button {
+  min-height: var(--ui-control-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-space-2);
+  padding: 0 var(--ui-space-4);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-md, 0);
+  background: var(--ds-color-action, transparent);
+  color: var(--ds-color-on-action, inherit);
+  box-shadow: var(--ds-shadow-control, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-control, none);
+  backdrop-filter: var(--ds-backdrop-control, none);
+  font: 600 var(--ds-font-size-sm, 0.875rem) / 1 var(--ds-font-family-strong, inherit);
+  cursor: pointer;
+  transition:
+    transform var(--ui-motion-fast),
+    background-color var(--ui-motion-fast);
+}
+
+.button[data-variant="secondary"] {
+  background: var(--ds-color-surface-raised, transparent);
+  color: var(--ds-color-text, inherit);
+}
+
+.button[data-variant="danger"] {
+  background: var(--ds-color-danger, transparent);
+  color: var(--ds-color-on-danger, inherit);
+  border-color: var(--ds-color-danger, currentColor);
+}
+
+.button[data-variant="primary"]:hover {
+  background: var(--ds-color-action-hover, transparent);
+}
+
+.button[data-variant="secondary"]:hover {
+  background: var(--ds-color-surface-hover, transparent);
+}
+
+.button[data-variant="danger"]:hover {
+  background: var(--ds-color-danger-hover, var(--ds-color-danger, transparent));
+}
+
+.button:active {
+  transform: scale(0.98);
+  box-shadow: var(--ds-shadow-inset, none);
+}
+
+.button:focus-visible,
+.input:focus-visible,
+.select:focus-visible,
+.iconButton:focus-visible {
+  outline: 3px solid var(--ds-color-focus, currentColor);
+  outline-offset: 2px;
+}
+
+.input,
+.select {
+  width: 100%;
+  min-height: var(--ui-control-height);
+  padding: 0 var(--ui-space-3);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-md, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  color: var(--ds-color-text, inherit);
+  box-shadow: var(--ds-shadow-inset, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-control, none);
+  backdrop-filter: var(--ds-backdrop-control, none);
+  font: 400 var(--ds-font-size-sm, 0.875rem) / 1.4 var(--ds-font-family-body, inherit);
+}
+
+.input::placeholder {
+  color: var(--ds-color-text-muted, inherit);
+}
+
+.icon {
+  display: block;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.icon[data-size="small"] {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.icon[data-size="medium"] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.iconButton {
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 3rem;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--ds-radius-lg, 0);
+  background: var(--ds-color-surface, transparent);
+  box-shadow: var(--ds-shadow-control, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-control, none);
+  backdrop-filter: var(--ds-backdrop-control, none);
+  cursor: pointer;
+  transition: background-color var(--ui-motion-fast);
+}
+
+.iconButton[data-active="true"] {
+  background: var(--ds-color-surface-selected, transparent);
+  box-shadow: var(--ds-shadow-inset, none);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: var(--ui-space-2) var(--ui-space-3);
+  border-radius: var(--ds-radius-pill, 999px);
+  background: var(--ds-color-surface, transparent);
+  color: var(--ds-color-text-muted, inherit);
+  font: 600 var(--ds-font-size-xs, 0.75rem) / 1 var(--ds-font-family-strong, inherit);
+}
+
+.status[data-state="active"] {
+  color: var(--ds-color-text, inherit);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .iconButton {
+    transition: none;
+  }
+}

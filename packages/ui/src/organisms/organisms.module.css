@@ -1,0 +1,311 @@
+.splitLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+  gap: var(--ui-space-5);
+  align-items: start;
+}
+
+.splitContent {
+  min-width: 0;
+  display: grid;
+  gap: var(--ui-space-5);
+}
+
+.contentSection {
+  display: grid;
+  gap: var(--ui-space-4);
+  padding: var(--ui-space-5);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-lg, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  box-shadow: var(--ds-shadow-surface, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
+  backdrop-filter: var(--ds-backdrop-surface, none);
+}
+
+.contentSection header span {
+  display: grid;
+  gap: var(--ui-space-1);
+}
+
+.contentSection header h2 {
+  margin: 0;
+  font-family: var(--ds-font-family-strong, inherit);
+  font-size: var(--ds-font-size-md, 1rem);
+}
+
+.contentSection header small {
+  color: var(--ds-color-text-muted, inherit);
+  font-size: var(--ds-font-size-xs, 0.75rem);
+}
+
+.responsiveGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: var(--ui-space-4);
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ui-space-3);
+}
+
+.sidePanel {
+  position: sticky;
+  top: calc(var(--ui-header-height) + var(--ui-space-5));
+  display: grid;
+  gap: var(--ui-space-5);
+  padding: var(--ui-space-5);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-lg, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  box-shadow: var(--ds-shadow-surface, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
+  backdrop-filter: var(--ds-backdrop-surface, none);
+}
+
+.signedOut {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--ui-space-5);
+  background: var(--ds-color-content, transparent);
+  color: var(--ds-color-text, inherit);
+  font-family: var(--ds-font-family-body, inherit);
+}
+
+.signedOutCard {
+  width: min(100%, var(--ui-chat-width));
+  display: grid;
+  justify-items: center;
+  gap: var(--ui-space-4);
+  padding: var(--ui-space-6);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-lg, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  box-shadow: var(--ds-shadow-lg, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
+  backdrop-filter: var(--ds-backdrop-surface, none);
+  text-align: center;
+}
+
+.signedOutCard h1, .signedOutCard p {
+  margin: 0;
+}
+
+.signedOutCard h1 {
+  font-family: var(--ds-font-family-strong, inherit);
+  font-size: var(--ds-font-size-xl, 1.5rem);
+}
+
+.signedOutCard p {
+  color: var(--ds-color-text-muted, inherit);
+  font-size: var(--ds-font-size-sm, 0.875rem);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-4);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
+  gap: var(--ui-space-4);
+}
+
+.card {
+  min-height: 12rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ui-space-3);
+  padding: var(--ui-space-5);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-md, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  color: var(--ds-color-text, inherit);
+  box-shadow: var(--ds-shadow-surface, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
+  backdrop-filter: var(--ds-backdrop-surface, none);
+  text-align: left;
+  font: inherit;
+  transition:
+    transform var(--ui-motion-fast),
+    border-color var(--ui-motion-fast),
+    box-shadow var(--ui-motion-fast);
+}
+
+.card[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.card[data-interactive="true"]:hover {
+  transform: translateY(-2px);
+  border-color: var(--ds-color-border-strong, currentColor);
+  box-shadow: var(--ds-shadow-sm, none);
+}
+
+.card[data-interactive="true"]:focus-visible {
+  outline: 3px solid var(--ds-color-focus, currentColor);
+  outline-offset: 2px;
+}
+
+.cardTitle {
+  margin: var(--ui-space-1) 0 0;
+  font-family: var(--ds-font-family-strong, inherit);
+  font-size: var(--ds-font-size-md, 1rem);
+  font-weight: 600;
+}
+
+.cardMeta {
+  display: grid;
+  gap: var(--ui-space-2);
+  color: var(--ds-color-text-muted, inherit);
+  font-size: var(--ds-font-size-xs, 0.75rem);
+}
+
+.empty {
+  min-height: 24rem;
+  display: grid;
+  place-items: center;
+  padding: var(--ui-space-6);
+  border: 1px dashed var(--ds-color-border-strong, currentColor);
+  border-radius: var(--ds-radius-lg, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  text-align: center;
+}
+
+.emptyContent {
+  max-width: 25rem;
+  display: grid;
+  justify-items: center;
+  gap: var(--ui-space-4);
+}
+
+.emptyContent h2, .emptyContent p {
+  margin: 0;
+}
+
+.emptyContent p {
+  color: var(--ds-color-text-muted, inherit);
+  line-height: 1.6;
+}
+
+.panel {
+  padding: var(--ui-space-5);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-lg, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  box-shadow: var(--ds-shadow-surface, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
+  backdrop-filter: var(--ds-backdrop-surface, none);
+}
+
+.details {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--ui-space-6);
+}
+
+.form {
+  display: grid;
+  gap: var(--ui-space-5);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ui-space-5);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ui-space-3);
+  padding-top: var(--ui-space-4);
+  border-top: 1px solid var(--ds-color-border, currentColor);
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: var(--ui-space-4);
+  background: var(--ds-color-overlay, transparent);
+}
+
+.modal {
+  width: min(100%, 28rem);
+  display: grid;
+  gap: var(--ui-space-4);
+  padding: var(--ui-space-5);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-lg, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  box-shadow: var(--ds-shadow-lg, none);
+  -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
+  backdrop-filter: var(--ds-backdrop-surface, none);
+}
+
+.modal h2, .modal p {
+  margin: 0;
+}
+
+.modal p {
+  color: var(--ds-color-text-muted, inherit);
+  line-height: 1.5;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ui-space-3);
+}
+
+@media (max-width: 56rem) {.splitLayout {
+    grid-template-columns: 1fr;
+  }
+
+.sidePanel {
+    position: static;
+  }}
+
+@media (max-width: 40rem) {.toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+.details, .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+.formActions {
+    flex-direction: column-reverse;
+  }
+
+.buttonGroup {
+    flex-direction: column-reverse;
+  }
+
+.buttonGroup > button {
+    width: 100%;
+  }
+
+.formActions button {
+    width: 100%;
+  }}
+
+@media (prefers-reduced-motion: reduce) {.signedOut *, .signedOut *::before, .signedOut *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }}

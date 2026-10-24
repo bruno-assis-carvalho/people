@@ -1,0 +1,16 @@
+:root {
+  --ui-space-1: 0.25rem;
+  --ui-space-2: 0.5rem;
+  --ui-space-3: 0.75rem;
+  --ui-space-4: 1rem;
+  --ui-space-5: 1.5rem;
+  --ui-space-6: 2rem;
+  --ui-header-height: 5.25rem;
+  --ui-sidebar-width: 23rem;
+  --ui-content-max-width: 90rem;
+  --ui-control-height: 2.75rem;
+  --ui-motion-fast: 160ms ease;
+  --ui-motion-layout: 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  --ui-floating-offset: 1.5rem;
+  --ui-chat-width: 20rem;
+}

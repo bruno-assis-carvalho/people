@@ -1,0 +1,16 @@
+@import "./skins/default.css";
+@import "./skins/newmorphism.css";
+@import "./skins/liquid-glass.css";
+@import "./skins/neon-glass.css";
+@import "./skins/neon.css";
+@import "./skins/custom.css";
+
+:root {
+  --ds-font-family-body: "Inter:Regular", Inter, sans-serif;
+  --ds-font-family-strong: "Inter:Semi Bold", Inter, sans-serif;
+  --ds-font-size-xs: 0.75rem;
+  --ds-font-size-sm: 0.875rem;
+  --ds-font-size-md: 1rem;
+  --ds-font-size-lg: 1.25rem;
+  --ds-font-size-xl: 1.5rem;
+}

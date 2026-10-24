@@ -1,0 +1,10 @@
+{
+  "description": "Manage personal records effortlessly with a user-friendly interface featuring a card grid for easy access, search functionality, and seamless editing.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

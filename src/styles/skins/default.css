@@ -1,0 +1,101 @@
+:root,
+:root[data-skin="default"] {
+  color-scheme: light;
+  --ds-color-background: #f4f4f4;
+  --ds-color-surface: #f4f4f4;
+  --ds-color-surface-raised: #ffffff;
+  --ds-color-surface-hover: #ededed;
+  --ds-color-surface-selected: #e7e7e7;
+  --ds-color-placeholder: #d5d5d5;
+  --ds-color-text: #181818;
+  --ds-color-text-muted: #727272;
+  --ds-color-border: #e7e7e7;
+  --ds-color-border-strong: #a8a8a8;
+  --ds-color-sidebar: #eeeeee;
+  --ds-color-header: #e9e9e9;
+  --ds-color-content: #f7f7f7;
+  --ds-color-action: #2c2c2c;
+  --ds-color-action-hover: #4a4a4a;
+  --ds-color-on-action: #ffffff;
+  --ds-color-danger: #5c2929;
+  --ds-color-on-danger: #ffffff;
+  --ds-color-success: #365c3b;
+  --ds-color-focus: #595959;
+  --ds-color-overlay: rgb(24 24 24 / 48%);
+  --ds-radius-md: 0.5rem;
+  --ds-radius-lg: 0.75rem;
+  --ds-radius-pill: 999px;
+  --ds-shadow-sm: 0 0.25rem 1rem rgb(24 24 24 / 8%);
+  --ds-shadow-lg: 0 1rem 3rem rgb(24 24 24 / 18%);
+  --ds-shadow-control: none;
+  --ds-shadow-inset: none;
+  --ds-shadow-surface: none;
+  --ds-backdrop-control: none;
+  --ds-backdrop-surface: none;
+}
+
+:root[data-skin="default"][data-theme="dark"] {
+  color-scheme: dark;
+  --ds-color-background: #181818;
+  --ds-color-surface: #242424;
+  --ds-color-surface-raised: #202020;
+  --ds-color-surface-hover: #303030;
+  --ds-color-surface-selected: #383838;
+  --ds-color-placeholder: #454545;
+  --ds-color-text: #f1f1f1;
+  --ds-color-text-muted: #b4b4b4;
+  --ds-color-border: #383838;
+  --ds-color-border-strong: #777777;
+  --ds-color-sidebar: #202020;
+  --ds-color-header: #2c2c2c;
+  --ds-color-content: #181818;
+  --ds-color-action: #ededed;
+  --ds-color-action-hover: #d7d7d7;
+  --ds-color-on-action: #181818;
+  --ds-color-danger: #9a5555;
+  --ds-color-on-danger: #ffffff;
+  --ds-color-success: #9dcaa3;
+  --ds-color-focus: #dddddd;
+  --ds-color-overlay: rgb(0 0 0 / 70%);
+  --ds-shadow-sm: 0 0.25rem 1rem rgb(0 0 0 / 25%);
+  --ds-shadow-lg: 0 1rem 3rem rgb(0 0 0 / 45%);
+  --ds-shadow-control: none;
+  --ds-shadow-inset: none;
+  --ds-shadow-surface: none;
+  --ds-backdrop-control: none;
+  --ds-backdrop-surface: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --ds-color-background: #181818;
+    --ds-color-surface: #242424;
+    --ds-color-surface-raised: #202020;
+    --ds-color-surface-hover: #303030;
+    --ds-color-surface-selected: #383838;
+    --ds-color-placeholder: #454545;
+    --ds-color-text: #f1f1f1;
+    --ds-color-text-muted: #b4b4b4;
+    --ds-color-border: #383838;
+    --ds-color-border-strong: #777777;
+    --ds-color-sidebar: #202020;
+    --ds-color-header: #2c2c2c;
+    --ds-color-content: #181818;
+    --ds-color-action: #ededed;
+    --ds-color-action-hover: #d7d7d7;
+    --ds-color-on-action: #181818;
+    --ds-color-danger: #9a5555;
+    --ds-color-on-danger: #ffffff;
+    --ds-color-success: #9dcaa3;
+    --ds-color-focus: #dddddd;
+    --ds-color-overlay: rgb(0 0 0 / 70%);
+    --ds-shadow-sm: 0 0.25rem 1rem rgb(0 0 0 / 25%);
+    --ds-shadow-lg: 0 1rem 3rem rgb(0 0 0 / 45%);
+    --ds-shadow-control: none;
+    --ds-shadow-inset: none;
+    --ds-shadow-surface: none;
+    --ds-backdrop-control: none;
+    --ds-backdrop-surface: none;
+  }
+}
