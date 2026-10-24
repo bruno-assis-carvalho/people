@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react"
 import { Link, useLocation } from "react-router"
-import { Icon, IconButton } from "../atoms"
+import { Avatar, Icon, IconButton, Input } from "../atoms"
 import styles from "./AppShell.module.css"
 
 export interface NavigationItem {
@@ -59,9 +59,8 @@ export function AppShellFrame({
   feedback,
   children,
 }: AppShellFrameProps) {
-  const [activePanel, setActivePanel] = useState<"menu" | "account" | null>(
-    "menu",
-  )
+  const [activePanel, setActivePanel] =
+    useState<"menu" | "account" | "assistant" | null>("menu")
   const [visibleFeedback, setVisibleFeedback] = useState(feedback)
   const location = useLocation()
 
@@ -91,7 +90,7 @@ export function AppShellFrame({
                 ? "Recolher menu de aplicativos"
                 : "Abrir menu de aplicativos"
             }
-            icon="/assets/a00ab.svg"
+            icon={<Icon src="/assets/a00ab.svg" size="small" />}
             active={activePanel === "menu"}
             expanded={activePanel === "menu"}
             controls="application-panel"
@@ -99,27 +98,38 @@ export function AppShellFrame({
               setActivePanel((current) => (current === "menu" ? null : "menu"))
             }
           />
-          <div className={styles.account}>
-            <button
-              className={styles.avatar}
-              data-active={activePanel === "account"}
-              type="button"
-              aria-label={
-                activePanel === "account"
-                  ? "Recolher opções da conta"
-                  : "Abrir opções da conta"
-              }
-              aria-expanded={activePanel === "account"}
-              aria-controls="application-panel"
-              onClick={() =>
-                setActivePanel((current) =>
-                  current === "account" ? null : "account",
-                )
-              }
-            >
-              {accountName.slice(0, 1).toLocaleUpperCase()}
-            </button>
-          </div>
+          <IconButton
+            label={
+              activePanel === "account"
+                ? "Recolher opções da conta"
+                : "Abrir opções da conta"
+            }
+            icon={<Avatar name={accountName} />}
+            active={activePanel === "account"}
+            expanded={activePanel === "account"}
+            controls="application-panel"
+            onClick={() =>
+              setActivePanel((current) =>
+                current === "account" ? null : "account",
+              )
+            }
+          />
+          <IconButton
+            label={
+              activePanel === "assistant"
+                ? "Recolher assistente"
+                : "Abrir assistente"
+            }
+            icon={<Icon src="/assets/assistant.svg" size="small" />}
+            active={activePanel === "assistant"}
+            expanded={activePanel === "assistant"}
+            controls="application-panel"
+            onClick={() =>
+              setActivePanel((current) =>
+                current === "assistant" ? null : "assistant",
+              )
+            }
+          />
         </div>
       </header>
       <header className={styles.contentHeader}>
@@ -171,7 +181,13 @@ export function AppShellFrame({
         className={styles.sidebar}
         data-state={isSidebarOpen ? "open" : "closed"}
         data-panel={activePanel ?? "none"}
-        aria-label={activePanel === "account" ? "Conta e preferências" : "Menu"}
+        aria-label={
+          activePanel === "account"
+            ? "Conta e preferências"
+            : activePanel === "assistant"
+              ? "Assistente"
+              : "Menu"
+        }
         aria-hidden={!isSidebarOpen}
       >
         {activePanel === "menu" && (
@@ -211,6 +227,31 @@ export function AppShellFrame({
                 )
               })}
             </nav>
+          </section>
+        )}
+        {activePanel === "assistant" && (
+          <section className={styles.sidebarPanel} aria-label="Assistente">
+            <div className={styles.panelHeader}>
+              <span>
+                <strong>Assistente de pessoas</strong>
+                <small>Orientação contextual para esta tela</small>
+              </span>
+              <button
+                className={styles.panelClose}
+                type="button"
+                aria-label="Fechar assistente"
+                onClick={() => setActivePanel(null)}
+              >
+                ×
+              </button>
+            </div>
+            <p className={styles.chatMessage}>
+              Posso ajudar a consultar ou preencher dados de uma pessoa.
+            </p>
+            <Input
+              aria-label="Mensagem para o assistente"
+              placeholder="Escreva uma mensagem"
+            />
           </section>
         )}
         {activePanel === "account" && (

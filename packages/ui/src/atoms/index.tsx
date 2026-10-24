@@ -51,7 +51,7 @@ export function IconButton({
   controls,
 }: {
   label: string
-  icon: string
+  icon: ReactNode
   active?: boolean
   onClick?: () => void
   expanded?: boolean
@@ -67,8 +67,16 @@ export function IconButton({
       type="button"
       onClick={onClick}
     >
-      <Icon src={icon} size="small" />
+      {icon}
     </button>
+  )
+}
+
+export function Avatar({ name }: { name: string }) {
+  return (
+    <span className={styles.avatar} aria-hidden="true">
+      {name.slice(0, 1).toLocaleUpperCase()}
+    </span>
   )
 }
 

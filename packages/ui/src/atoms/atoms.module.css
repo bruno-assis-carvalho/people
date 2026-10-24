@@ -112,6 +112,18 @@
   box-shadow: var(--ds-shadow-inset, none);
 }
 
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--ds-color-border-strong, currentColor);
+  border-radius: var(--ds-radius-pill, 999px);
+  background: var(--ds-color-placeholder, transparent);
+  color: var(--ds-color-text-muted, inherit);
+  font: 600 var(--ds-font-size-xs, 0.75rem) / 1 var(--ds-font-family-strong, inherit);
+}
+
 .status {
   display: inline-flex;
   align-items: center;

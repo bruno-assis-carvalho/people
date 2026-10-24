@@ -144,41 +144,9 @@
   text-overflow: ellipsis;
 }
 
-.avatar {
-  width: 2rem;
-  height: 2rem;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 1px solid transparent;
-  border-radius: var(--ds-radius-pill, 999px);
-  background: var(--ds-color-placeholder, transparent);
-  color: var(--ds-color-text-muted, inherit);
-  font-family: var(--ds-font-family-strong, inherit);
-  font-size: var(--ds-font-size-xs, 0.75rem);
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    border-color var(--ui-motion-fast),
-    transform var(--ui-motion-fast);
-}
-
-.avatar:hover, .avatar[data-active="true"] {
-  border-color: var(--ds-color-border-strong, currentColor);
-}
-
-.avatar:active {
-  transform: scale(0.96);
-}
-
-.avatar:focus-visible, .sidebarPanel button:focus-visible, .accountLink:focus-visible {
+.sidebarPanel button:focus-visible, .accountLink:focus-visible {
   outline: 3px solid var(--ds-color-focus, currentColor);
   outline-offset: 2px;
-}
-
-.account {
-  display: grid;
-  place-items: center;
 }
 
 .sidebarPanel {
