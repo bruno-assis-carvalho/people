@@ -43,10 +43,6 @@ export function ResponsiveGrid({ children }: { children: ReactNode }) {
   return <div className={styles.responsiveGrid}>{children}</div>
 }
 
-export function ButtonGroup({ children }: { children: ReactNode }) {
-  return <div className={styles.buttonGroup}>{children}</div>
-}
-
 export function SidePanel({
   label,
   children,

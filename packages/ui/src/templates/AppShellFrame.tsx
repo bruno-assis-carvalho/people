@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import { Link, useLocation } from "react-router"
 import { Avatar, Icon, IconButton, Input } from "../atoms"
+import { ButtonGroup } from "../molecules"
 import styles from "./AppShell.module.css"
 
 export interface NavigationItem {
@@ -83,54 +84,37 @@ export function AppShellFrame({
       </a>
       <header className={styles.sidebarHeader}>
         <div className={styles.brand}>{brand}</div>
-        <div className={styles.user}>
+        <ButtonGroup
+          label="Ações do usuário"
+          value={activePanel}
+          onValueChange={(value) => {
+            if (
+              value === null ||
+              value === "assistant" ||
+              value === "menu" ||
+              value === "account"
+            ) {
+              setActivePanel(value)
+            }
+          }}
+          controls="application-panel"
+        >
           <IconButton
-            label={
-              activePanel === "menu"
-                ? "Recolher menu de aplicativos"
-                : "Abrir menu de aplicativos"
-            }
-            icon={<Icon src="/assets/a00ab.svg" size="small" />}
-            active={activePanel === "menu"}
-            expanded={activePanel === "menu"}
-            controls="application-panel"
-            onClick={() =>
-              setActivePanel((current) => (current === "menu" ? null : "menu"))
-            }
-          />
-          <IconButton
-            label={
-              activePanel === "account"
-                ? "Recolher opções da conta"
-                : "Abrir opções da conta"
-            }
-            icon={<Avatar name={accountName} />}
-            active={activePanel === "account"}
-            expanded={activePanel === "account"}
-            controls="application-panel"
-            onClick={() =>
-              setActivePanel((current) =>
-                current === "account" ? null : "account",
-              )
-            }
-          />
-          <IconButton
-            label={
-              activePanel === "assistant"
-                ? "Recolher assistente"
-                : "Abrir assistente"
-            }
+            label="Assistente"
+            value="assistant"
             icon={<Icon src="/assets/assistant.svg" size="small" />}
-            active={activePanel === "assistant"}
-            expanded={activePanel === "assistant"}
-            controls="application-panel"
-            onClick={() =>
-              setActivePanel((current) =>
-                current === "assistant" ? null : "assistant",
-              )
-            }
           />
-        </div>
+          <IconButton
+            label="Menu de aplicativos"
+            value="menu"
+            icon={<Icon src="/assets/a00ab.svg" size="small" />}
+          />
+          <IconButton
+            label="Opções da conta"
+            value="account"
+            icon={<Avatar name={accountName} />}
+          />
+        </ButtonGroup>
       </header>
       <header className={styles.contentHeader}>
         {backTo && (

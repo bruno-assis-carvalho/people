@@ -66,14 +66,6 @@
   content: none;
 }
 
-.user {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: var(--ui-space-2);
-  color: var(--ds-color-text-muted, inherit);
-}
-
 .backButton, .panelClose, .toastClose {
   display: inline-grid;
   place-items: center;

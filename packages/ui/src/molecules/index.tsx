@@ -2,10 +2,65 @@ import {
   useState,
   type ChangeEventHandler,
   type DragEvent,
+  type HTMLAttributes,
   type ReactNode,
 } from "react"
 import { Button, Icon, Input, Select } from "../atoms"
+import { ButtonGroupContext } from "../atoms/buttonGroupContext"
 import styles from "./molecules.module.css"
+
+export function ButtonGroup({
+  children,
+  label,
+  stackOnMobile = false,
+  value,
+  defaultValue = null,
+  onValueChange,
+  controls,
+  toggleable = true,
+  className,
+  ...props
+}: Omit<HTMLAttributes<HTMLDivElement>, "value" | "defaultValue"> & {
+  label?: string
+  stackOnMobile?: boolean
+  value?: string | null
+  defaultValue?: string | null
+  onValueChange?: (value: string | null) => void
+  controls?: string
+  toggleable?: boolean
+}) {
+  const [internalValue, setInternalValue] = useState<string | null>(
+    defaultValue ?? null,
+  )
+  const isControlled = value !== undefined
+  const selectedValue = isControlled ? value : internalValue
+  const select = (nextValue: string) => {
+    const selected =
+      toggleable && selectedValue === nextValue ? null : nextValue
+    if (!isControlled) setInternalValue(selected)
+    onValueChange?.(selected)
+  }
+
+  return (
+    <ButtonGroupContext.Provider
+      value={{
+        value: selectedValue,
+        controls,
+        select,
+      }}
+    >
+      <div
+        {...props}
+        className={`${styles.buttonGroup}${className ? ` ${className}` : ""}`}
+        data-stack-mobile={stackOnMobile}
+        role="group"
+        aria-label={label}
+      >
+        {children}
+      </div>
+    </ButtonGroupContext.Provider>
+  )
+}
 
 export function Field({
   label,

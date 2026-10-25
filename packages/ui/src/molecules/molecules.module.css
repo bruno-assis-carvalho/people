@@ -1,3 +1,23 @@
+.buttonGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-3);
+  color: var(--ds-color-text-muted, inherit);
+}
+
+@media (max-width: 40rem) {
+  .buttonGroup[data-stack-mobile="true"] {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .buttonGroup[data-stack-mobile="true"] > * {
+    width: 100%;
+  }
+}
+
 .field {
   display: grid;
   gap: var(--ui-space-2);

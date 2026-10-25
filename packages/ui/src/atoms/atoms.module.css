@@ -42,6 +42,12 @@
   background: var(--ds-color-danger-hover, var(--ds-color-danger, transparent));
 }
 
+.button[data-active="true"] {
+  background: var(--ds-color-surface-selected, var(--ds-color-action, transparent));
+  color: var(--ds-color-text, inherit);
+  box-shadow: var(--ds-shadow-inset, none);
+}
+
 .button:active {
   transform: scale(0.98);
   box-shadow: var(--ds-shadow-inset, none);

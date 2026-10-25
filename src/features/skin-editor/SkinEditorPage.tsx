@@ -74,7 +74,7 @@ export default function SkinEditorPage() {
             </Feedback>
           </ContentSection>
           <ContentSection title="Botões">
-            <ButtonGroup>
+            <ButtonGroup label="Botões de demonstração" stackOnMobile>
               <Button>Primário</Button>
               <Button variant="secondary">Secundário</Button>
               <Button variant="danger">Perigo</Button>
@@ -194,7 +194,7 @@ export default function SkinEditorPage() {
         </Feedback>
       ))}
       {message && <Feedback>{message}</Feedback>}
-      <ButtonGroup>
+      <ButtonGroup label="Ações da skin personalizada" stackOnMobile>
         <Button
           variant="secondary"
           onClick={() => {

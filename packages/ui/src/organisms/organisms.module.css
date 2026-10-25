@@ -45,12 +45,6 @@
   gap: var(--ui-space-4);
 }
 
-.buttonGroup {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--ui-space-3);
-}
-
 .sidePanel {
   position: sticky;
   top: calc(var(--ui-header-height) + var(--ui-space-5));
@@ -289,14 +283,6 @@
 
 .formActions {
     flex-direction: column-reverse;
-  }
-
-.buttonGroup {
-    flex-direction: column-reverse;
-  }
-
-.buttonGroup > button {
-    width: 100%;
   }
 
 .formActions button {
