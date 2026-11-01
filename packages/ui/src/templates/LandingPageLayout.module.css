@@ -1,0 +1,224 @@
+.landing {
+  width: min(100% - 3rem, 76rem);
+  min-height: 100dvh;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  min-height: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--ds-color-border);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ds-color-text);
+  font: 600 1rem / 1 var(--ds-font-family-strong);
+  text-decoration: none;
+}
+
+.brandMark {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.65rem;
+  background: var(--ds-color-action);
+  color: var(--ds-color-on-action);
+  font-size: 0.9rem;
+}
+
+.hero {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.85fr);
+  align-items: center;
+  gap: clamp(3rem, 8vw, 7rem);
+  padding-block: clamp(4rem, 10vh, 7rem);
+}
+
+.heroCopy {
+  max-width: 39rem;
+}
+
+.eyebrow {
+  margin: 0 0 1.25rem;
+  color: var(--ds-color-text-muted);
+  font: 600 0.75rem / 1.4 var(--ds-font-family-strong);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  color: var(--ds-color-text);
+  font: 600 clamp(2.75rem, 6vw, 5rem) / 1.04 var(--ds-font-family-strong);
+  letter-spacing: -0.055em;
+}
+
+.description {
+  max-width: 34rem;
+  margin: 1.5rem 0 2rem;
+  color: var(--ds-color-text-muted);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.preview {
+  position: relative;
+  isolation: isolate;
+  padding: 1.25rem;
+  border: 1px solid var(--ds-color-border);
+  border-radius: 1.25rem;
+  background: var(--ds-color-surface-raised);
+  box-shadow: var(--ds-shadow-lg);
+}
+
+.previewHeader,
+.previewFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--ds-color-text-muted);
+  font-size: 0.75rem;
+}
+
+.previewHeader {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ds-color-border);
+  font-weight: 600;
+}
+
+.previewDot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--ds-color-success);
+}
+
+.previewStatus {
+  margin-left: auto;
+  color: var(--ds-color-success);
+}
+
+.previewContent {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem 0.25rem 0.25rem;
+}
+
+.previewHeading {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.previewLabel {
+  color: var(--ds-color-text-muted);
+  font-size: 0.8rem;
+}
+
+.previewHeading strong {
+  color: var(--ds-color-text);
+  font: 600 3rem / 1 var(--ds-font-family-strong);
+  letter-spacing: -0.04em;
+}
+
+.peopleStack {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.peopleStack span {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  margin-left: -0.5rem;
+  border: 3px solid var(--ds-color-surface-raised);
+  border-radius: 50%;
+  background: var(--ds-color-placeholder);
+  color: var(--ds-color-text);
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.peopleStack span:last-child {
+  width: auto;
+  min-width: 2.5rem;
+  padding-inline: 0.5rem;
+  border-radius: 2rem;
+  background: var(--ds-color-surface-selected);
+}
+
+.previewRule {
+  height: 0.5rem;
+  margin-block: 1.5rem 1rem;
+  border-radius: 1rem;
+  background: var(--ds-color-surface-selected);
+}
+
+.previewFooter {
+  justify-content: space-between;
+}
+
+.previewCheck {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ds-color-success);
+  color: var(--ds-color-surface-raised);
+  font-weight: 600;
+}
+
+.previewDecoration {
+  position: absolute;
+  z-index: -1;
+  inset: auto -1.5rem -1.5rem auto;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background: var(--ds-color-surface-selected);
+  opacity: 0.65;
+}
+
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding-block: 2rem;
+  border-top: 1px solid var(--ds-color-border);
+}
+
+.footer {
+  padding-block: 1.5rem;
+  color: var(--ds-color-text-muted);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 48rem) {
+  .landing {
+    width: min(100% - 2rem, 34rem);
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-block: 4rem;
+  }
+
+  .highlights {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}

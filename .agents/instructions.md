@@ -20,7 +20,7 @@ You must actively read the content of the corresponding skill file before respon
 
 - **UI Components & Design System (`packages/ui`):**
   - _Trigger:_ Tasks involving the creation or modification of design system components, layout primitives, headless/layout-first architecture, atomic design layers (`atoms`, `molecules`, `organisms`), or structural styling within `packages/ui`.
-  - _Action:_ Load and strictly follow the rules defined in `.agents/skills/ui-component-generator/SKILL.md`.
+  - _Action:_ Load and strictly follow the rules defined in `.agents/skills/ui-components/skill.md`.
 
 - **Testing (Unit, E2E, and Accessibility):**
   - _Trigger:_ Tasks involving writing or updating tests, running or debugging test suites, Playwright E2E coverage, or accessibility audits.

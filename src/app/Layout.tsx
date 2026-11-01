@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Outlet, useLocation, useMatches } from "react-router"
+import { useAuth0 } from "@auth0/auth0-react"
 import type { ReactNode } from "react"
 import { AppShell, type BreadcrumbItem } from "@ui"
 import { usePeople } from "@/features/people/PeopleProvider"
@@ -36,6 +37,7 @@ const skinOptions = [
 ]
 
 export default function Layout() {
+  const { user } = useAuth0()
   const matches = useMatches()
   const location = useLocation()
   const { storageMessage, people, getPerson } = usePeople()
@@ -112,8 +114,8 @@ export default function Layout() {
           icon: "/assets/fd90f.svg",
         },
       ]}
-      accountName="Usuário Nexus"
-      accountEmail="usuario@nexus.local"
+      accountName={user?.name ?? user?.nickname ?? user?.email ?? "Conta"}
+      accountEmail={user?.email ?? ""}
       accountLinks={[
         { label: "Meu perfil", to: "/in/profile" },
         { label: "Sair", to: "/logout" },
