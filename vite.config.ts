@@ -8,6 +8,17 @@ import path from "node:path"
 export default defineConfig(({ mode }) => {
   // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
   const emitSourcemaps = mode === "development"
+  const aliases = {
+    "@": path.resolve(__dirname, "./src"),
+    "@ui": path.resolve(__dirname, "./packages/ui/src/index.ts"),
+  }
+
+  if (process.env.PEOPLE_E2E === "true") {
+    aliases["@auth0/auth0-react"] = path.resolve(
+      __dirname,
+      "./tests/support/auth0.tsx",
+    )
+  }
 
   return {
     base: process.env.FIGMA_PUBLIC_URL
@@ -34,10 +45,7 @@ export default defineConfig(({ mode }) => {
       figmaMakeKitPlugin({ storiesGlob: "/src/**/*.stories.{ts,tsx,js,jsx}" }),
     ],
     resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "./src"),
-        "@ui": path.resolve(__dirname, "./packages/ui/src/index.ts"),
-      },
+      alias: aliases,
     },
     server: {
       host: process.env.FIGMA_DEV_SERVER_HOST || "0.0.0.0",
