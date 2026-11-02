@@ -68,6 +68,7 @@ export function IconButton({
   expanded,
   controls,
   value,
+  shortcut,
 }: {
   label: string
   icon: ReactNode
@@ -75,6 +76,7 @@ export function IconButton({
   expanded?: boolean
   controls?: string
   value?: string
+  shortcut?: string
 }) {
   const group = useContext(ButtonGroupContext)
   const isGrouped = group !== null && value !== undefined
@@ -85,6 +87,8 @@ export function IconButton({
       className={styles.iconButton}
       data-active={isExpanded}
       aria-label={label}
+      aria-keyshortcuts={shortcut}
+      title={shortcut ? `${label} (${shortcut})` : undefined}
       aria-expanded={isExpanded}
       aria-controls={controls ?? (isGrouped ? group.controls : undefined)}
       type="button"

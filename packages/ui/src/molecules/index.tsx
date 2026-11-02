@@ -1,13 +1,45 @@
 import {
+  useEffect,
+  useRef,
   useState,
   type ChangeEventHandler,
   type DragEvent,
   type HTMLAttributes,
+  type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
 } from "react"
 import { Button, Icon, Input, Select } from "../atoms"
 import { ButtonGroupContext } from "../atoms/buttonGroupContext"
 import styles from "./molecules.module.css"
+
+export interface ButtonGroupKeyboardOptions {
+  orientation?: "horizontal" | "vertical" | "both"
+  loop?: boolean
+  itemSelector?: string
+}
+
+const defaultKeyboardItemSelector =
+  "button:not(:disabled), a[href], [role='option'], [role='menuitem'], [role='gridcell']"
+
+function getKeyboardItems(
+  root: HTMLDivElement,
+  selector: string,
+): HTMLElement[] {
+  return Array.from(root.querySelectorAll<HTMLElement>(selector)).filter(
+    (item) => {
+      if (
+        item.hasAttribute("disabled") ||
+        item.getAttribute("aria-disabled") === "true" ||
+        item.closest("[hidden], [aria-hidden='true']")
+      ) {
+        return false
+      }
+
+      const style = window.getComputedStyle(item)
+      return style.display !== "none" && style.visibility !== "hidden"
+    },
+  )
+}
 
 export function ButtonGroup({
   children,
@@ -18,7 +50,10 @@ export function ButtonGroup({
   onValueChange,
   controls,
   toggleable = true,
+  keyboard,
   className,
+  onKeyDown,
+  onFocusCapture,
   ...props
 }: Omit<HTMLAttributes<HTMLDivElement>, "value" | "defaultValue"> & {
   label?: string
@@ -28,7 +63,9 @@ export function ButtonGroup({
   onValueChange?: (value: string | null) => void
   controls?: string
   toggleable?: boolean
+  keyboard?: ButtonGroupKeyboardOptions
 }) {
+  const rootRef = useRef<HTMLDivElement>(null)
   const [internalValue, setInternalValue] = useState<string | null>(
     defaultValue ?? null,
   )
@@ -39,6 +76,78 @@ export function ButtonGroup({
       toggleable && selectedValue === nextValue ? null : nextValue
     if (!isControlled) setInternalValue(selected)
     onValueChange?.(selected)
+  }
+
+  const keyboardEnabled = keyboard !== undefined
+  const orientation = keyboard?.orientation ?? "horizontal"
+  const loop = keyboard?.loop ?? true
+  const itemSelector = keyboard?.itemSelector ?? defaultKeyboardItemSelector
+  const syncTabStops = (activeItem?: HTMLElement) => {
+    const root = rootRef.current
+    if (!root || !keyboardEnabled) return
+
+    const items = getKeyboardItems(root, itemSelector)
+    const current =
+      (activeItem && items.includes(activeItem) ? activeItem : undefined) ??
+      items.find((item) => item === document.activeElement) ??
+      items[0]
+
+    items.forEach((item) => {
+      item.tabIndex = item === current ? 0 : -1
+    })
+  }
+
+  useEffect(() => {
+    if (keyboardEnabled) syncTabStops()
+  }, [children, keyboardEnabled, itemSelector])
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    onKeyDown?.(event)
+    if (event.defaultPrevented || !keyboardEnabled) return
+
+    const root = rootRef.current
+    if (!root) return
+
+    const items = getKeyboardItems(root, itemSelector)
+    const currentIndex = items.findIndex(
+      (item) => item === document.activeElement,
+    )
+    if (currentIndex < 0 || items.length === 0) return
+
+    const isRtl =
+      root.dir === "rtl" || window.getComputedStyle(root).direction === "rtl"
+    const forwardHorizontalKey = isRtl ? "ArrowLeft" : "ArrowRight"
+    const backwardHorizontalKey = isRtl ? "ArrowRight" : "ArrowLeft"
+    const isForward =
+      (orientation !== "vertical" && event.key === forwardHorizontalKey) ||
+      (orientation !== "horizontal" && event.key === "ArrowDown")
+    const isBackward =
+      (orientation !== "vertical" && event.key === backwardHorizontalKey) ||
+      (orientation !== "horizontal" && event.key === "ArrowUp")
+
+    let nextIndex: number | undefined
+    if (event.key === "Home") {
+      nextIndex = 0
+    } else if (event.key === "End") {
+      nextIndex = items.length - 1
+    } else if (isForward) {
+      nextIndex = currentIndex + 1
+    } else if (isBackward) {
+      nextIndex = currentIndex - 1
+    }
+
+    if (nextIndex === undefined) return
+    event.preventDefault()
+
+    if (loop) {
+      nextIndex = (nextIndex + items.length) % items.length
+    } else {
+      nextIndex = Math.max(0, Math.min(nextIndex, items.length - 1))
+    }
+
+    const nextItem = items[nextIndex]
+    syncTabStops(nextItem)
+    nextItem.focus()
   }
 
   return (
@@ -55,6 +164,17 @@ export function ButtonGroup({
         data-stack-mobile={stackOnMobile}
         role="group"
         aria-label={label}
+        ref={rootRef}
+        onKeyDown={handleKeyDown}
+        onFocusCapture={(event) => {
+          onFocusCapture?.(event)
+          if (!event.defaultPrevented && keyboardEnabled) {
+            const target = event.target
+            if (target instanceof HTMLElement && target !== rootRef.current) {
+              syncTabStops(target)
+            }
+          }
+        }}
       >
         {children}
       </div>

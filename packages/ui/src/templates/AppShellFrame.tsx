@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react"
 import { Link, useLocation } from "react-router"
 import { Avatar, Icon, IconButton, Input } from "../atoms"
 import { ButtonGroup } from "../molecules"
+import { useHotkeys } from "../keyboard"
 import styles from "./AppShell.module.css"
 
 export interface NavigationItem {
@@ -65,6 +66,13 @@ export function AppShellFrame({
   const [visibleFeedback, setVisibleFeedback] = useState(feedback)
   const location = useLocation()
 
+  useHotkeys({
+    "ctrl+1": () => setActivePanel("assistant"),
+    "ctrl+2": () => setActivePanel("menu"),
+    "ctrl+3": () => setActivePanel("account"),
+    "ctrl+x": () => setActivePanel(null),
+  })
+
   useEffect(() => {
     setVisibleFeedback(feedback)
     if (!feedback) return
@@ -98,20 +106,24 @@ export function AppShellFrame({
             }
           }}
           controls="application-panel"
+          keyboard={{ orientation: "horizontal" }}
         >
           <IconButton
             label="Assistente"
             value="assistant"
+            shortcut="Control+1"
             icon={<Icon src="/assets/assistant.svg" size="small" />}
           />
           <IconButton
             label="Menu de aplicativos"
             value="menu"
+            shortcut="Control+2"
             icon={<Icon src="/assets/a00ab.svg" size="small" />}
           />
           <IconButton
             label="Opções da conta"
             value="account"
+            shortcut="Control+3"
             icon={<Avatar name={accountName} />}
           />
         </ButtonGroup>
