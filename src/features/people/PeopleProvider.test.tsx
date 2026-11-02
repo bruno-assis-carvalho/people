@@ -30,11 +30,11 @@ describe("PeopleProvider", () => {
   it("loads the example people when storage is empty", () => {
     const { result } = renderHook(() => usePeople(), { wrapper })
 
-    expect(result.current.people.map(({ name }) => name)).toEqual([
+    expect(result.current.people).toHaveLength(125)
+    expect(new Set(result.current.people.map(({ id }) => id)).size).toBe(125)
+    expect(result.current.people.map(({ name }) => name)).toContain(
       "Marina Costa",
-      "André Santos",
-      "Luciana Rocha",
-    ])
+    )
     expect(localStorage.getItem(storageKey)).toBeNull()
   })
 
@@ -83,7 +83,7 @@ describe("PeopleProvider", () => {
 
     const { result } = renderHook(() => usePeople(), { wrapper })
 
-    expect(result.current.people).toHaveLength(3)
+    expect(result.current.people).toHaveLength(125)
     expect(result.current.storageMessage).toContain(
       "Os registros salvos estão inválidos",
     )
@@ -96,7 +96,7 @@ describe("PeopleProvider", () => {
 
     const { result } = renderHook(() => usePeople(), { wrapper })
 
-    expect(result.current.people).toHaveLength(3)
+    expect(result.current.people).toHaveLength(125)
     expect(result.current.storageMessage).toBe(
       "Não foi possível ler os registros salvos neste navegador.",
     )
@@ -111,7 +111,7 @@ describe("PeopleProvider", () => {
 
     act(() => result.current.createPerson(personInput))
 
-    expect(result.current.people).toHaveLength(4)
+    expect(result.current.people).toHaveLength(126)
     expect(result.current.storageMessage).toBe(
       "As alterações estão disponíveis nesta sessão, mas não puderam ser salvas neste navegador.",
     )

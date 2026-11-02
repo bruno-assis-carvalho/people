@@ -145,6 +145,23 @@
   gap: var(--ui-space-4);
 }
 
+.gridLoadMore {
+  grid-column: 1 / -1;
+  justify-self: center;
+  padding: var(--ui-space-3) var(--ui-space-5);
+  border: 1px solid var(--ds-color-border, currentColor);
+  border-radius: var(--ds-radius-md, 0);
+  background: var(--ds-color-surface-raised, transparent);
+  color: var(--ds-color-text, inherit);
+  font: inherit;
+  cursor: pointer;
+}
+
+.gridLoadMore:focus-visible {
+  outline: 3px solid var(--ds-color-focus, currentColor);
+  outline-offset: 2px;
+}
+
 .card {
   min-height: 12rem;
   width: 100%;

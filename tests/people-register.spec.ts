@@ -75,7 +75,7 @@ test("cancels then confirms deletion of a person", async ({ page }) => {
   await expect(page).toHaveURL(/\/in\/people$/)
   await expect(page.getByText("Pessoa excluída com sucesso.")).toBeVisible()
   await expect(
-    page.getByRole("heading", { name: "Pessoas cadastradas (2)" }),
+    page.getByRole("heading", { name: "Pessoas cadastradas (124)" }),
   ).toBeVisible()
   await expect(
     page.getByRole("button", { name: "Ver dados de Luciana Rocha" }),
@@ -94,4 +94,19 @@ test("filters the people list by a case-insensitive name", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "Ver dados de André Santos" }),
   ).toHaveCount(0)
+})
+
+test("loads more people cards as the list is scrolled", async ({ page }) => {
+  await page.goto("/in/people")
+  const peopleGrid = page.getByRole("group", { name: "Pessoas cadastradas" })
+
+  await expect(
+    peopleGrid.getByRole("button", { name: /Ver dados de/ }),
+  ).toHaveCount(20)
+  await page
+    .getByRole("button", { name: "Carregar mais" })
+    .scrollIntoViewIfNeeded()
+  await expect(
+    peopleGrid.getByRole("button", { name: /Ver dados de/ }),
+  ).toHaveCount(40)
 })

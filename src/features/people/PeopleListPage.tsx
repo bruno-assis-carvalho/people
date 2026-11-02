@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useNavigate } from "react-router"
 import {
   CardGrid,
@@ -10,10 +10,13 @@ import {
 } from "@ui"
 import { usePeople } from "./PeopleProvider"
 
+const PAGE_SIZE = 20
+
 export default function PeopleListPage() {
   const { people } = usePeople()
   const navigate = useNavigate()
   const [query, setQuery] = useState("")
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const filteredPeople = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase("pt-BR")
     if (!normalized) return people
@@ -23,6 +26,14 @@ export default function PeopleListPage() {
       ),
     )
   }, [people, query])
+  const visiblePeople = filteredPeople.slice(0, visibleCount)
+  const loadMore = useCallback(() => {
+    setVisibleCount((count) => count + PAGE_SIZE)
+  }, [])
+  const handleQueryChange = (nextQuery: string) => {
+    setVisibleCount(PAGE_SIZE)
+    setQuery(nextQuery)
+  }
 
   return (
     <ListTemplate
@@ -31,7 +42,7 @@ export default function PeopleListPage() {
           label="Consultar pessoas"
           placeholder="Buscar por nome, e-mail, CPF ou cidade"
           value={query}
-          onChange={setQuery}
+          onChange={handleQueryChange}
         />
       }
       isEmpty={filteredPeople.length === 0}
@@ -50,8 +61,13 @@ export default function PeopleListPage() {
         />
       }
     >
-      <CardGrid label="Pessoas cadastradas">
-        {filteredPeople.map((person) => (
+      <CardGrid
+        label="Pessoas cadastradas"
+        hasMore={visiblePeople.length < filteredPeople.length}
+        onLoadMore={loadMore}
+        loadMoreLabel="Carregar mais"
+      >
+        {visiblePeople.map((person) => (
           <ContentCard
             key={person.id}
             label={`Ver dados de ${person.name}`}

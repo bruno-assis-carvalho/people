@@ -112,13 +112,53 @@ export function Toolbar({ children }: { children: ReactNode }) {
 export function CardGrid({
   label,
   children,
+  hasMore = false,
+  onLoadMore,
+  loadMoreLabel = "Load more",
 }: {
   label: string
   children: ReactNode
+  hasMore?: boolean
+  onLoadMore?: () => void
+  loadMoreLabel?: string
 }) {
+  const loadMoreRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    const loadMoreButton = loadMoreRef.current
+    if (
+      !hasMore ||
+      !onLoadMore ||
+      !loadMoreButton ||
+      typeof IntersectionObserver === "undefined"
+    ) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) onLoadMore()
+      },
+      { rootMargin: "200px" },
+    )
+    observer.observe(loadMoreButton)
+
+    return () => observer.disconnect()
+  }, [hasMore, onLoadMore])
+
   return (
     <div className={styles.grid} role="group" aria-label={label}>
       {children}
+      {hasMore && onLoadMore && (
+        <button
+          ref={loadMoreRef}
+          className={styles.gridLoadMore}
+          type="button"
+          onClick={onLoadMore}
+        >
+          {loadMoreLabel}
+        </button>
+      )}
     </div>
   )
 }
