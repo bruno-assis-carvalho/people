@@ -98,6 +98,40 @@
   font-size: var(--ds-font-size-sm, 0.875rem);
 }
 
+.loadingState {
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--ui-space-4);
+  padding: var(--ui-space-5);
+  color: var(--ds-color-text-muted, inherit);
+  font-family: var(--ds-font-family-body, inherit);
+  text-align: center;
+}
+
+.loadingState p {
+  margin: 0;
+  font-size: var(--ds-font-size-sm, 0.875rem);
+}
+
+.loadingSkeleton {
+  width: min(100%, 20rem);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--ui-space-3);
+}
+
+.loadingSkeleton > span {
+  display: grid;
+  gap: var(--ui-space-2);
+}
+
+.loadingSkeleton > :last-child {
+  grid-column: 1 / -1;
+}
+
 .toolbar {
   display: flex;
   align-items: center;
@@ -142,6 +176,42 @@
   transform: translateY(-2px);
   border-color: var(--ds-color-border-strong, currentColor);
   box-shadow: var(--ds-shadow-sm, none);
+}
+
+.card {
+  animation: card-enter var(--ui-motion-enter, 220ms ease-out) both;
+}
+
+.card:nth-child(2) {
+  animation-delay: 35ms;
+}
+
+.card:nth-child(3) {
+  animation-delay: 70ms;
+}
+
+.card:nth-child(4) {
+  animation-delay: 105ms;
+}
+
+.card:nth-child(5) {
+  animation-delay: 140ms;
+}
+
+.card:nth-child(6) {
+  animation-delay: 175ms;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ui-space-2));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card[data-interactive="true"]:focus-visible {
@@ -295,3 +365,9 @@
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+}

@@ -145,9 +145,68 @@
   color: var(--ds-color-text, inherit);
 }
 
+.spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline-block;
+  flex: 0 0 auto;
+  border: 2px solid var(--ds-color-border-strong, currentColor);
+  border-right-color: var(--ds-color-focus, currentColor);
+  border-radius: var(--ds-radius-pill, 999px);
+  animation: spinner-turn 700ms linear infinite;
+}
+
+.skeleton {
+  min-width: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--ds-radius-sm, 0.25rem);
+  background:
+    linear-gradient(
+      100deg,
+      transparent 20%,
+      var(--ds-color-surface-raised, rgba(255, 255, 255, 0.5)) 50%,
+      transparent 80%
+    ),
+    var(--ds-color-placeholder, var(--ds-color-surface, currentColor));
+  background-size: 220% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton[data-variant="text"] {
+  width: 100%;
+  height: 0.8em;
+}
+
+.skeleton[data-variant="circle"] {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--ds-radius-pill, 999px);
+}
+
+.skeleton[data-variant="rect"] {
+  min-height: 3rem;
+  border-radius: var(--ds-radius-md, 0);
+}
+
+@keyframes spinner-turn {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    background-position-x: -220%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .button,
-  .iconButton {
+  .iconButton,
+  .spinner,
+  .skeleton {
     transition: none;
+    animation: none;
   }
 }

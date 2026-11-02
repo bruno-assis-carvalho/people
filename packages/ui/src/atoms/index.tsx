@@ -2,6 +2,7 @@ import {
   useContext,
   forwardRef,
   type ButtonHTMLAttributes,
+  type CSSProperties,
   type InputHTMLAttributes,
   type ReactNode,
   type SelectHTMLAttributes,
@@ -123,5 +124,28 @@ export function Status({
     <span className={styles.status} data-state={state}>
       {children}
     </span>
+  )
+}
+
+export function Spinner() {
+  return <span className={styles.spinner} aria-hidden="true" />
+}
+
+export function Skeleton({
+  variant = "text",
+  width,
+  height,
+}: {
+  variant?: "text" | "circle" | "rect"
+  width?: CSSProperties["width"]
+  height?: CSSProperties["height"]
+}) {
+  return (
+    <span
+      className={styles.skeleton}
+      data-variant={variant}
+      style={{ width, height }}
+      aria-hidden="true"
+    />
   )
 }

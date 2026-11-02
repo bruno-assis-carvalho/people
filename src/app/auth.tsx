@@ -1,6 +1,7 @@
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router"
+import { LoadingState } from "@ui"
 
 export function Auth0ProviderRoute() {
   const navigate = useNavigate()
@@ -96,7 +97,7 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   }
 
   if (isLoading || !isAuthenticated) {
-    return <main role="status">Checking your sign-in…</main>
+    return <LoadingState label="Checking your sign-in…" variant="skeleton" />
   }
 
   return children

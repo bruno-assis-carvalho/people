@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, type FormEvent, type ReactNode } from "react"
-import { Button } from "../atoms"
+import { Button, Skeleton, Spinner } from "../atoms"
 import styles from "./organisms.module.css"
 
 export function SplitLayout({
@@ -75,6 +75,32 @@ export function SignedOutView({
         <p>{description}</p>
         <Button onClick={onAction}>{actionLabel}</Button>
       </section>
+    </main>
+  )
+}
+
+export function LoadingState({
+  label,
+  variant = "spinner",
+}: {
+  label: string
+  variant?: "spinner" | "skeleton"
+}) {
+  return (
+    <main className={styles.loadingState} role="status" aria-live="polite">
+      {variant === "spinner" ? (
+        <Spinner />
+      ) : (
+        <div className={styles.loadingSkeleton}>
+          <Skeleton variant="circle" />
+          <span>
+            <Skeleton width="68%" />
+            <Skeleton width="42%" />
+          </span>
+          <Skeleton variant="rect" height="4rem" />
+        </div>
+      )}
+      <p>{label}</p>
     </main>
   )
 }

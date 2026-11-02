@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router"
-import { SignedOutTemplate } from "@ui"
+import { LoadingState, SignedOutTemplate } from "@ui"
 
 export default function SignedOutPage() {
   const { isAuthenticated, isLoading, logout } = useAuth0()
@@ -26,7 +26,7 @@ export default function SignedOutPage() {
   }, [isAuthenticated, isLoading, signOut])
 
   if ((isLoading || isAuthenticated) && !logoutError) {
-    return <main role="status">Signing out…</main>
+    return <LoadingState label="Signing out…" />
   }
 
   return (

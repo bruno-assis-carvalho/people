@@ -11,6 +11,7 @@
   --ui-control-height: 2.75rem;
   --ui-motion-fast: 160ms ease;
   --ui-motion-layout: 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  --ui-motion-enter: 220ms cubic-bezier(0.16, 1, 0.3, 1);
   --ui-floating-offset: 1.5rem;
   --ui-chat-width: 20rem;
 }
