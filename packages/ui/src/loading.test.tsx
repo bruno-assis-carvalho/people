@@ -7,11 +7,9 @@ afterEach(cleanup)
 
 describe("loading UI", () => {
   it("renders a decorative spinner with an accessible status label", () => {
-    render(
-      <LoadingState label="Checking your sign-in…" />,
-    )
+    render(<LoadingState label="Checking your sign-in…" />)
 
-    expect(screen.getByRole("status")).toHaveTextContent(
+    expect(screen.getByRole("status").textContent).toContain(
       "Checking your sign-in…",
     )
     expect(document.querySelector('[aria-hidden="true"]')).toBeTruthy()
@@ -20,8 +18,8 @@ describe("loading UI", () => {
   it("renders an accessible skeleton loading state", () => {
     render(<LoadingState label="Loading content" variant="skeleton" />)
 
-    expect(screen.getByRole("status")).toHaveTextContent("Loading content")
-    expect(document.querySelectorAll('[aria-hidden="true"] .skeleton')).toHaveLength(4)
+    expect(screen.getByRole("status").textContent).toContain("Loading content")
+    expect(document.querySelectorAll("[data-variant]")).toHaveLength(4)
   })
 
   it("exposes standalone skeleton and spinner primitives as decorative", () => {

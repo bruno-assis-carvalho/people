@@ -179,7 +179,7 @@
 }
 
 .card {
-  animation: card-enter var(--ui-motion-enter, 220ms ease-out) both;
+  animation: card-enter var(--ui-motion-enter, 220ms ease-out) backwards;
 }
 
 .card:nth-child(2) {
