@@ -4,6 +4,7 @@ import { Avatar, Icon, IconButton, Input } from "../atoms"
 import { ButtonGroup } from "../molecules"
 import { useHotkeys } from "../keyboard"
 import styles from "./AppShell.module.css"
+import { SidebarPanel } from "./SidebarPanel"
 
 export interface NavigationItem {
   label: string
@@ -187,21 +188,13 @@ export function AppShellFrame({
         aria-hidden={!isSidebarOpen}
       >
         {activePanel === "menu" && (
-          <section className={styles.sidebarPanel} aria-label="Navegação">
-            <div className={styles.panelHeader}>
-              <span>
-                <strong>Navegação</strong>
-                <small>Acesse uma área</small>
-              </span>
-              <button
-                className={styles.panelClose}
-                type="button"
-                aria-label="Fechar navegação"
-                onClick={() => setActivePanel(null)}
-              >
-                ×
-              </button>
-            </div>
+          <SidebarPanel
+            ariaLabel="Navegação"
+            title="Navegação"
+            description="Acesse uma área"
+            closeLabel="Fechar navegação"
+            onClose={() => setActivePanel(null)}
+          >
             <nav className={styles.navIcons}>
               {navigationItems.map((item) => {
                 const isCurrent =
@@ -223,52 +216,36 @@ export function AppShellFrame({
                 )
               })}
             </nav>
-          </section>
+          </SidebarPanel>
         )}
         {activePanel === "assistant" && (
-          <section className={styles.sidebarPanel} aria-label="Assistente">
-            <div className={styles.panelHeader}>
-              <span>
-                <strong>Assistente de pessoas</strong>
-                <small>Orientação contextual para esta tela</small>
-              </span>
-              <button
-                className={styles.panelClose}
-                type="button"
-                aria-label="Fechar assistente"
-                onClick={() => setActivePanel(null)}
-              >
-                ×
-              </button>
+          <SidebarPanel
+            ariaLabel="Assistente"
+            title="Assistente de pessoas"
+            description="Orientação contextual para esta tela"
+            closeLabel="Fechar assistente"
+            onClose={() => setActivePanel(null)}
+          >
+            <div>
+
+              <p className={styles.chatMessage}>
+                Posso ajudar a consultar ou preencher dados de uma pessoa.
+              </p>
+              <Input
+                aria-label="Mensagem para o assistente"
+                placeholder="Escreva uma mensagem"
+              />
             </div>
-            <p className={styles.chatMessage}>
-              Posso ajudar a consultar ou preencher dados de uma pessoa.
-            </p>
-            <Input
-              aria-label="Mensagem para o assistente"
-              placeholder="Escreva uma mensagem"
-            />
-          </section>
+          </SidebarPanel>
         )}
         {activePanel === "account" && (
-          <section
-            className={styles.sidebarPanel}
-            aria-label="Conta e preferências"
+          <SidebarPanel
+            ariaLabel="Conta e preferências"
+            title="Conta"
+            description="Informações e preferências"
+            closeLabel="Fechar opções da conta"
+            onClose={() => setActivePanel(null)}
           >
-            <div className={styles.panelHeader}>
-              <span>
-                <strong>Conta</strong>
-                <small>Informações e preferências</small>
-              </span>
-              <button
-                className={styles.panelClose}
-                type="button"
-                aria-label="Fechar opções da conta"
-                onClick={() => setActivePanel(null)}
-              >
-                ×
-              </button>
-            </div>
             <div className={styles.accountIdentity}>
               <strong>{accountName}</strong>
               <small>{accountEmail}</small>
@@ -319,7 +296,7 @@ export function AppShellFrame({
                 {link.label}
               </Link>
             ))}
-          </section>
+          </SidebarPanel>
         )}
       </aside>
       <main className={styles.main} id="main-content">

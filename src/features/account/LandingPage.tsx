@@ -6,7 +6,7 @@ export default function LandingPage() {
 
   return (
     <LandingPageLayout
-      brand="Nexus XP / APIS"
+      brand="Nexus XP"
       eyebrow="Gestão simples, relações mais fortes"
       title="Pessoas no centro de tudo."
       description="Um espaço claro e organizado para manter as informações da sua equipe sempre por perto."

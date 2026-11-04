@@ -36,7 +36,7 @@
   align-items: center;
   min-width: 0;
   padding-inline: var(--ui-space-5);
-  background: var(--ds-color-header, transparent);
+  background: var(--ds-color-content, transparent);
   box-shadow: inset 0 -1px 0 var(--ds-color-border, transparent);
   -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
   backdrop-filter: var(--ds-backdrop-surface, none);
@@ -66,9 +66,8 @@
   content: none;
 }
 
-.backButton, .panelClose, .toastClose {
+.backButton, .toastClose {
   display: inline-grid;
-  place-items: center;
   padding: 0;
   border: 0;
   background: transparent;
@@ -84,7 +83,7 @@
   text-decoration: none;
 }
 
-.backButton:focus-visible, .panelClose:focus-visible, .toastClose:focus-visible {
+.backButton:focus-visible, .toastClose:focus-visible {
   outline: 3px solid var(--ds-color-focus, currentColor);
   outline-offset: 2px;
 }
@@ -136,24 +135,9 @@
   text-overflow: ellipsis;
 }
 
-.sidebarPanel button:focus-visible, .accountLink:focus-visible {
+.accountLink:focus-visible {
   outline: 3px solid var(--ds-color-focus, currentColor);
   outline-offset: 2px;
-}
-
-.sidebarPanel {
-  display: grid;
-  align-content: start;
-  gap: var(--ui-space-5);
-  min-height: min(32rem, calc(100dvh - var(--ui-header-height) - var(--ui-space-6)));
-  padding: var(--ui-space-5);
-  border-radius: var(--ds-radius-lg, 0);
-  background: var(--ds-color-surface-raised, transparent);
-  color: var(--ds-color-text, inherit);
-  box-shadow: var(--ds-shadow-surface, none);
-  -webkit-backdrop-filter: var(--ds-backdrop-surface, none);
-  backdrop-filter: var(--ds-backdrop-surface, none);
-  animation: toast-in var(--ui-motion-layout);
 }
 
 .accountIdentity {
@@ -278,30 +262,6 @@
 
 .navItem[aria-current="page"] .navIcon {
   background: var(--ds-color-surface-selected, transparent);
-}
-
-.panelHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--ui-space-3);
-  padding-bottom: var(--ui-space-4);
-  border-bottom: 1px solid var(--ds-color-border, currentColor);
-}
-
-.panelHeader span {
-  display: grid;
-  gap: var(--ui-space-1);
-}
-
-.panelHeader strong {
-  font-family: var(--ds-font-family-strong, inherit);
-  font-size: var(--ds-font-size-sm, 0.875rem);
-}
-
-.panelHeader small, .panelClose {
-  width: var(--ui-control-height);
-  height: var(--ui-control-height);
 }
 
 .toast {

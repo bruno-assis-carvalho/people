@@ -12,6 +12,8 @@ export type {
   NavigationItem,
   SelectionOption,
 } from "./AppShellFrame"
+export { SidebarPanel } from "./SidebarPanel"
+export type { SidebarPanelProps } from "./SidebarPanel"
 
 export function LandingPageLayout({
   brand,

@@ -6,6 +6,36 @@ import { AppShellFrame } from "./AppShellFrame"
 afterEach(cleanup)
 
 describe("AppShellFrame shortcuts", () => {
+  it("renders a reusable panel header and closes the panel", () => {
+    render(
+      <MemoryRouter>
+        <AppShellFrame
+          brand="Nexus"
+          navigationItems={[]}
+          accountName="Avery"
+          accountEmail="avery@example.com"
+          accountLinks={[]}
+          theme="light"
+          themeOptions={[]}
+          skin="default"
+          skinOptions={[]}
+          onThemeChange={() => {}}
+          onSkinChange={() => {}}
+        >
+          <div>Page</div>
+        </AppShellFrame>
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole("region", { name: "Navegação" })).toBeTruthy()
+    expect(screen.getByText("Acesse uma área")).toBeTruthy()
+    fireEvent.click(screen.getByRole("button", { name: "Fechar navegação" }))
+
+    expect(
+      document.querySelector("#application-panel")?.getAttribute("data-panel"),
+    ).toBe("none")
+  })
+
   it.each([
     ["1", "assistant"],
     ["2", "menu"],

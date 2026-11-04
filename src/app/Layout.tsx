@@ -105,7 +105,7 @@ export default function Layout() {
     <AppShell
       title={pageTitle}
       headerAction={activeHandle?.headerAction}
-      brand="Nexus XP / APIS"
+      brand="Nexus XP"
       navigationItems={[
         { label: "Pessoas", to: "/in/people", icon: "/assets/403a2.svg" },
         {
