@@ -1,0 +1,47 @@
+{
+  "name": "express-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec \"npm run build && node --import ./dist/instrumentation.js ./dist/server.js\"",
+    "build": "tsc",
+    "start": "node --import ./dist/instrumentation.js dist/server.js",
+    "prebuild": "npm run build --workspace=@genesis/interfaces",
+    "pretest": "npm run build --workspace=@genesis/interfaces",
+    "test": "tsx --test src/shared/middlewares/error-handler.test.ts src/features/people/people.validation.test.ts src/shared/auth/authentication.test.ts src/observability/trace.decorator.test.ts src/observability/observe.decorator.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@genesis/interfaces": "*",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.80.0",
+    "@opentelemetry/exporter-metrics-otlp-proto": "^0.222.0",
+    "@opentelemetry/exporter-trace-otlp-proto": "^0.222.0",
+    "@opentelemetry/resources": "^2.11.0",
+    "@opentelemetry/sdk-node": "^0.222.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.4",
+    "class-validator-jsonschema": "^5.2.0",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "express-oauth2-jwt-bearer": "^1.10.0",
+    "mongoose": "^9.10.2",
+    "pino": "^10.3.1",
+    "reflect-metadata": "^0.2.2",
+    "routing-controllers": "^0.11.3",
+    "routing-controllers-openapi": "^5.0.1",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.2",
+    "@types/swagger-ui-express": "^4.1.8",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

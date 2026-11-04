@@ -1,0 +1,21 @@
+{
+  "extends": "../../packages/config/tsconfig.package.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "paths": {
+      "@atoms": ["./src/atoms/index.ts"],
+      "@atoms/*": ["./src/atoms/index.ts"],
+      "@molecules": ["./src/molecules/index.ts"],
+      "@molecules/*": ["./src/molecules/index.ts"],
+      "@organisms": ["./src/organisms/index.ts"],
+      "@organisms/*": ["./src/organisms/index.ts"],
+      "@templates": ["./src/templates/index.ts"],
+      "@templates/*": ["./src/templates/index.ts"]
+    }
+  },
+  "include": ["index.ts", "styles.d.ts", "src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@people/ui",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --config ../../packages/config/eslint.config.js"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.4",
+    "react-hook-form": "^7.55.0"
+  }
+}

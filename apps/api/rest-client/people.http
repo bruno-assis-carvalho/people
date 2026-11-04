@@ -1,0 +1,101 @@
+@baseUrl = http://localhost:3000
+@accessToken = {{getAuthToken.response.body.$.access_token}}
+@personId = {{createPerson.response.body.$.id}}
+
+### Get an Auth0 access token (expected 200)
+# @name getAuthToken
+POST {{$dotenv AUTH0_DOMAIN}}/oauth/token
+Content-Type: application/json
+Accept: application/json
+
+{
+  "client_id": "{{$dotenv AUTH0_CLIENT_ID}}",
+  "client_secret": "{{$dotenv AUTH0_CLIENT_SECRET}}",
+  "audience": "{{$dotenv AUTH0_AUDIENCE}}",
+  "grant_type": "client_credentials"
+}
+
+### Health check (public)
+GET {{baseUrl}}/
+Accept: application/json
+
+### OpenAPI document (public)
+GET {{baseUrl}}/docs/openapi.json
+Accept: application/json
+
+### People list without a token (expected 401)
+GET {{baseUrl}}/api/people/
+Accept: application/json
+
+### People list (expected 200)
+# @name listPeople
+GET {{baseUrl}}/api/people/
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+### Create a person (expected 201)
+# @name createPerson
+POST {{baseUrl}}/api/people/
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "REST Client {{$guid}}",
+  "email": "rest-client-{{$guid}}@example.com"
+}
+
+### Get the person created above (expected 200)
+# @name getCreatedPerson
+GET {{baseUrl}}/api/people/{{personId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+### Update the person created above (expected 200)
+PUT {{baseUrl}}/api/people/{{personId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "REST Client Updated",
+  "email": "rest-client-updated-{{$guid}}@example.com"
+}
+
+### Reject an invalid email address (expected 400)
+POST {{baseUrl}}/api/people/
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Invalid Email",
+  "email": "not-an-email"
+}
+
+### Reject an unknown request property (expected 400)
+POST {{baseUrl}}/api/people/
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Unknown Property",
+  "email": "unknown-property@example.com",
+  "isAdmin": true
+}
+
+### Reject an invalid person ID (expected 400)
+GET {{baseUrl}}/api/people/not-an-object-id
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+### Delete the person created above (expected 204, empty body)
+DELETE {{baseUrl}}/api/people/{{personId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+### Confirm the deleted person is missing (expected 404)
+GET {{baseUrl}}/api/people/{{personId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json
