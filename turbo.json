@@ -2,6 +2,27 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "tasks": {
+    "seed:e2e": {
+      "cache": false,
+      "env": [
+        "API_URL",
+        "TARGET_ENV",
+        "SEED_COUNT",
+        "SEED_USERS",
+        "SEED_OUTPUT_MANIFEST",
+        "AUTH_EMAIL",
+        "AUTH_PASSWORD",
+        "AUTH_TOKEN"
+      ]
+    },
+    "load:api": {
+      "cache": false,
+      "env": ["API_URL", "TARGET_ENV", "AUTH_TOKEN"]
+    },
+    "load:web": {
+      "cache": false,
+      "env": ["WEB_URL", "TARGET_ENV"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],

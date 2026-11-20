@@ -38,3 +38,8 @@ yarn-error.log*
 .turbo
 .__mf__temp/
 apps/web/.__mf__temp
+
+# Gatling load-test generated data and reports
+apps/load-test/data/*.csv
+apps/load-test/data/*.json
+apps/load-test/target/

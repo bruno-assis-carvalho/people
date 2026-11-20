@@ -1,0 +1,21 @@
+{
+  "name": "@repo/load-test",
+  "private": true,
+  "scripts": {
+    "generate:data": "tsx src/generators/seed-factory.ts",
+    "seed:e2e": "npm run generate:data && gatling run --sources-folder src/simulations --simulation seed",
+    "load:api": "gatling run --sources-folder src/simulations --simulation api-load",
+    "load:web": "gatling run --sources-folder src/simulations --simulation web-smoke",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.0",
+    "@gatling.io/core": "latest",
+    "@gatling.io/http": "latest"
+  },
+  "devDependencies": {
+    "@gatling.io/cli": "latest",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
