@@ -2,7 +2,9 @@ import "reflect-metadata";
 import { Type } from "class-transformer";
 import {
   IsArray,
+  IsDateString,
   IsEmail,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -19,6 +21,26 @@ export class CreatePersonRequest {
 
   @IsEmail({}, { message: "Please enter a valid email address" })
   email!: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @IsOptional()
+  @IsString()
+  document?: string;
+
+  @IsOptional()
+  @IsDateString()
+  birthDate?: string;
+
+  @IsOptional()
+  @IsString()
+  city?: string;
+
+  @IsOptional()
+  @IsIn(["Ativo", "Inativo"])
+  status?: "Ativo" | "Inativo";
 }
 
 export class UpdatePersonRequest {
@@ -30,6 +52,26 @@ export class UpdatePersonRequest {
 
   @IsEmail({}, { message: "Please enter a valid email address" })
   email!: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @IsOptional()
+  @IsString()
+  document?: string;
+
+  @IsOptional()
+  @IsDateString()
+  birthDate?: string;
+
+  @IsOptional()
+  @IsString()
+  city?: string;
+
+  @IsOptional()
+  @IsIn(["Ativo", "Inativo"])
+  status?: "Ativo" | "Inativo";
 }
 
 export class ValidationIssue {
@@ -52,6 +94,22 @@ export class PersonResponse {
 
   @IsEmail({}, { message: "Please enter a valid email address" })
   email!: string;
+
+  @IsString()
+  phone!: string;
+
+  @IsString()
+  document!: string;
+
+  @IsOptional()
+  @IsDateString()
+  birthDate!: string;
+
+  @IsString()
+  city!: string;
+
+  @IsIn(["Ativo", "Inativo"])
+  status!: "Ativo" | "Inativo";
 }
 
 export class ErrorResponse {

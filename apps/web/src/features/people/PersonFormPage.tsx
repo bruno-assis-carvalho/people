@@ -1,6 +1,13 @@
 import { useEffect, useState, type FormEvent } from "react"
 import { useNavigate, useParams } from "react-router"
-import { EmptyState, Field, Form, FormTemplate, SelectField } from "@ui"
+import {
+  EmptyState,
+  Field,
+  Form,
+  FormTemplate,
+  LoadingState,
+  SelectField,
+} from "@ui"
 import { usePeople } from "./PeopleProvider"
 import type { PersonInput } from "./types"
 
@@ -16,7 +23,7 @@ const emptyPerson: PersonInput = {
 
 export default function PersonFormPage() {
   const { id } = useParams()
-  const { getPerson, createPerson, updatePerson } = usePeople()
+  const { getPerson, createPerson, updatePerson, isLoading } = usePeople()
   const navigate = useNavigate()
   const existingPerson = id ? getPerson(id) : undefined
   const [values, setValues] = useState<PersonInput>(
@@ -30,20 +37,28 @@ export default function PersonFormPage() {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     if (id && existingPerson) {
-      updatePerson(id, values)
-      navigate(`/in/people/${id}`, {
-        state: { feedback: "Dados atualizados com sucesso." },
+      void updatePerson(id, values).then((updated) => {
+        if (updated) {
+          navigate(`/in/people/${id}`, {
+            state: { feedback: "Dados atualizados com sucesso." },
+          })
+        }
       })
       return
     }
-    const person = createPerson(values)
-    navigate(`/in/people/${person.id}`, {
-      state: { feedback: "Pessoa adicionada com sucesso." },
+    void createPerson(values).then((person) => {
+      if (person) {
+        navigate(`/in/people/${person.id}`, {
+          state: { feedback: "Pessoa adicionada com sucesso." },
+        })
+      }
     })
   }
 
   const onCancel = () =>
     navigate(id && existingPerson ? `/in/people/${id}` : "/in/people")
+
+  if (isLoading) return <LoadingState label="Carregando pessoa…" />
 
   if (id && !existingPerson) {
     return (

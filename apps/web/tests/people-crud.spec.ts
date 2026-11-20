@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test"
+import { expect, test } from "./support/fixtures"
 
 test("completes the people CRUD lifecycle through the UI", async ({ page }) => {
   const suffix = Date.now()

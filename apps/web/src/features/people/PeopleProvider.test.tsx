@@ -1,10 +1,16 @@
-import { act, cleanup, renderHook } from "@testing-library/react"
+import { act, cleanup, renderHook, waitFor } from "@testing-library/react"
 import type { PropsWithChildren } from "react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { PeopleProvider, usePeople } from "./PeopleProvider"
 import type { Person, PersonInput } from "./types"
 
-const storageKey = "nexus-people"
+const { getAccessTokenSilently } = vi.hoisted(() => ({
+  getAccessTokenSilently: vi.fn(async () => "test-access-token"),
+}))
+
+vi.mock("@auth0/auth0-react", () => ({
+  useAuth0: () => ({ getAccessTokenSilently }),
+}))
 
 const personInput: PersonInput = {
   name: "Rafaela Lima",
@@ -16,104 +22,91 @@ const personInput: PersonInput = {
   status: "Ativo",
 }
 
+const person: Person = { ...personInput, id: "person-1" }
 const wrapper = ({ children }: PropsWithChildren) => (
   <PeopleProvider>{children}</PeopleProvider>
 )
 
+function apiResponse(body: unknown, status = 200): Response {
+  return {
+    ok: status >= 200 && status < 300,
+    status,
+    json: async () => body,
+    text: async () => JSON.stringify(body),
+  } as Response
+}
+
 afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
-  localStorage.clear()
+  vi.unstubAllGlobals()
 })
 
 describe("PeopleProvider", () => {
-  it("loads the example people when storage is empty", () => {
+  it("loads people and performs CRUD through authenticated API resources", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(apiResponse([person]))
+      .mockResolvedValueOnce(apiResponse({ ...person, id: "person-2" }, 201))
+      .mockResolvedValueOnce(
+        apiResponse({ ...person, id: "person-2", city: "Curitiba, PR" }),
+      )
+      .mockResolvedValueOnce(apiResponse(undefined, 204))
+    vi.stubGlobal("fetch", fetchMock)
+
     const { result } = renderHook(() => usePeople(), { wrapper })
 
-    expect(result.current.people).toHaveLength(125)
-    expect(new Set(result.current.people.map(({ id }) => id)).size).toBe(125)
-    expect(result.current.people.map(({ name }) => name)).toContain(
-      "Marina Costa",
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    expect(result.current.people).toEqual([person])
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
+      "/api/people",
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          Authorization: "Bearer test-access-token",
+        }),
+      }),
     )
-    expect(localStorage.getItem(storageKey)).toBeNull()
-  })
 
-  it("loads saved people instead of the examples", () => {
-    const savedPerson: Person = { ...personInput, id: "saved-person" }
-    localStorage.setItem(storageKey, JSON.stringify([savedPerson]))
-
-    const { result } = renderHook(() => usePeople(), { wrapper })
-
-    expect(result.current.people).toEqual([savedPerson])
-    expect(result.current.getPerson(savedPerson.id)).toEqual(savedPerson)
-  })
-
-  it("creates, updates, and deletes people while persisting each change", () => {
-    const { result } = renderHook(() => usePeople(), { wrapper })
-    let createdId = ""
-
-    act(() => {
-      createdId = result.current.createPerson(personInput).id
+    let created: Person | undefined
+    await act(async () => {
+      created = await result.current.createPerson(personInput)
     })
+    expect(created?.id).toBe("person-2")
 
-    expect(createdId).toBeTruthy()
-    expect(result.current.getPerson(createdId)).toMatchObject(personInput)
-    expect(JSON.parse(localStorage.getItem(storageKey) ?? "[]")).toContainEqual(
-      { ...personInput, id: createdId },
-    )
-
-    const updatedPerson = { ...personInput, city: "Curitiba, PR" }
-    act(() => result.current.updatePerson(createdId, updatedPerson))
-
-    expect(result.current.getPerson(createdId)).toEqual({
-      ...updatedPerson,
-      id: createdId,
+    await act(async () => {
+      await result.current.updatePerson("person-2", {
+        ...personInput,
+        city: "Curitiba, PR",
+      })
     })
+    expect(result.current.getPerson("person-2")?.city).toBe("Curitiba, PR")
 
-    act(() => result.current.deletePerson(createdId))
-
-    expect(result.current.getPerson(createdId)).toBeUndefined()
-    expect(
-      JSON.parse(localStorage.getItem(storageKey) ?? "[]"),
-    ).not.toContainEqual(expect.objectContaining({ id: createdId }))
+    await act(async () => {
+      await result.current.deletePerson("person-2")
+    })
+    expect(result.current.getPerson("person-2")).toBeUndefined()
+    expect(fetchMock.mock.calls.map(([url, options]) => [url, options?.method]))
+      .toEqual([
+        ["/api/people", undefined],
+        ["/api/people", "POST"],
+        ["/api/people/person-2", "PUT"],
+        ["/api/people/person-2", "DELETE"],
+      ])
   })
 
-  it("falls back to example people and reports invalid saved data", () => {
-    localStorage.setItem(storageKey, "not-json")
+  it("exposes API failures instead of substituting local example data", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        apiResponse({ message: "Unauthorized", code: "UNAUTHORIZED" }, 401),
+      ),
+    )
 
     const { result } = renderHook(() => usePeople(), { wrapper })
 
-    expect(result.current.people).toHaveLength(125)
-    expect(result.current.storageMessage).toContain(
-      "Os registros salvos estão inválidos",
-    )
-  })
-
-  it("reports when saved data cannot be read", () => {
-    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
-      throw new Error("Storage unavailable")
-    })
-
-    const { result } = renderHook(() => usePeople(), { wrapper })
-
-    expect(result.current.people).toHaveLength(125)
-    expect(result.current.storageMessage).toBe(
-      "Não foi possível ler os registros salvos neste navegador.",
-    )
-  })
-
-  it("keeps changes in the session and reports when persistence fails", () => {
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
-      throw new Error("Storage unavailable")
-    })
-
-    const { result } = renderHook(() => usePeople(), { wrapper })
-
-    act(() => result.current.createPerson(personInput))
-
-    expect(result.current.people).toHaveLength(126)
-    expect(result.current.storageMessage).toBe(
-      "As alterações estão disponíveis nesta sessão, mas não puderam ser salvas neste navegador.",
-    )
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    expect(result.current.people).toEqual([])
+    expect(result.current.errorMessage).toBe("Unauthorized")
   })
 })

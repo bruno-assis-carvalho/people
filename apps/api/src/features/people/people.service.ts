@@ -11,10 +11,20 @@ const toResponse = (person: {
   _id: Types.ObjectId;
   name: string;
   email: string;
+  phone?: string;
+  document?: string;
+  birthDate?: string;
+  city?: string;
+  status?: "Ativo" | "Inativo";
 }): PersonResponse => ({
   id: person._id.toString(),
   name: person.name,
   email: person.email,
+  phone: person.phone ?? "",
+  document: person.document ?? "",
+  birthDate: person.birthDate ?? "",
+  city: person.city ?? "",
+  status: person.status ?? "Ativo",
 });
 
 export class PeopleService {

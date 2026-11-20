@@ -7,14 +7,16 @@ export function Auth0ProviderRoute() {
   const navigate = useNavigate()
   const domain = import.meta.env.VITE_AUTH0_DOMAIN?.trim()
   const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID?.trim()
+  const audience = import.meta.env.VITE_AUTH0_AUDIENCE?.trim()
 
-  if (!domain || !clientId) {
+  if (!domain || !clientId || !audience) {
     return (
       <main role="alert">
         <h1>Auth0 is not configured</h1>
         <p>
-          Set VITE_AUTH0_DOMAIN and VITE_AUTH0_CLIENT_ID in the local
-          environment, then restart the development server.
+          Set VITE_AUTH0_DOMAIN, VITE_AUTH0_CLIENT_ID, and
+          VITE_AUTH0_AUDIENCE in the local environment, then restart the
+          development server.
         </p>
       </main>
     )
@@ -24,7 +26,10 @@ export function Auth0ProviderRoute() {
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      authorizationParams={{ redirect_uri: window.location.origin }}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+        audience,
+      }}
       onRedirectCallback={(appState) => {
         const returnTo = appState?.returnTo
         navigate(

@@ -40,7 +40,7 @@ export default function Layout() {
   const { user } = useAuth0()
   const matches = useMatches()
   const location = useLocation()
-  const { storageMessage, people, getPerson } = usePeople()
+  const { errorMessage, people, getPerson } = usePeople()
   const [theme, setTheme] = useState<ThemeMode>(() =>
     document.documentElement.dataset.theme === "dark" ? "dark" : "light",
   )
@@ -152,7 +152,7 @@ export default function Layout() {
       }}
       breadcrumbs={breadcrumbs}
       backTo={activeHandle?.backTo}
-      feedback={[routeFeedback, storageMessage, skinWarning, appearanceMessage]
+      feedback={[routeFeedback, errorMessage, skinWarning, appearanceMessage]
         .filter(Boolean)
         .join(" ")}
     >

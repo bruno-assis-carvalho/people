@@ -7,24 +7,30 @@ import {
   DetailList,
   DetailTemplate,
   EmptyState,
+  LoadingState,
   Status,
 } from "@ui"
 import { usePeople } from "./PeopleProvider"
 
 export default function PersonDetailPage() {
   const { id = "" } = useParams()
-  const { getPerson, deletePerson } = usePeople()
+  const { getPerson, deletePerson, isLoading } = usePeople()
   const navigate = useNavigate()
   const [isDeleteOpen, setDeleteOpen] = useState(false)
   const person = getPerson(id)
 
   const onBack = () => navigate("/in/people")
   const onDeleteConfirm = () => {
-    deletePerson(id)
-    navigate("/in/people", {
-      state: { feedback: "Pessoa excluída com sucesso." },
+    void deletePerson(id).then((deleted) => {
+      if (deleted) {
+        navigate("/in/people", {
+          state: { feedback: "Pessoa excluída com sucesso." },
+        })
+      }
     })
   }
+
+  if (isLoading) return <LoadingState label="Carregando pessoa…" />
 
   if (!person) {
     return (
@@ -62,9 +68,11 @@ export default function PersonDetailPage() {
           <DataItem label="Telefone">{person.phone}</DataItem>
           <DataItem label="CPF">{person.document}</DataItem>
           <DataItem label="Data de nascimento">
-            {new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC" }).format(
-              new Date(`${person.birthDate}T00:00:00Z`),
-            )}
+            {person.birthDate
+              ? new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC" }).format(
+                  new Date(`${person.birthDate}T00:00:00Z`),
+                )
+              : ""}
           </DataItem>
           <DataItem label="Cidade">{person.city}</DataItem>
         </DetailList>

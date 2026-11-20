@@ -16,7 +16,7 @@ export default defineConfig({
   ],
   webServer: {
     command:
-      "PEOPLE_E2E=true VITE_AUTH0_DOMAIN=example.auth0.com VITE_AUTH0_CLIENT_ID=test-client VITE_FARO_URL= npm run dev -- --host 127.0.0.1 --port 4175 --strictPort",
+      "PEOPLE_E2E=true VITE_AUTH0_DOMAIN=example.auth0.com VITE_AUTH0_CLIENT_ID=test-client VITE_AUTH0_AUDIENCE=test-audience VITE_FARO_URL= npm run dev -- --host 127.0.0.1 --port 4175 --strictPort",
     url: "http://127.0.0.1:4175",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

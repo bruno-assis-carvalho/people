@@ -163,13 +163,23 @@ Com os dados enviados, use o Grafana Cloud para consultar traces no Tempo e mét
 
 ## Modelo de pessoa
 
-A API persiste somente os campos:
+A API persiste `name` e `email`, além dos campos complementares usados pela aplicação web:
 
 ```json
 {
+  "id": "65f...",
   "name": "Ada Lovelace",
-  "email": "ada@example.com"
+  "email": "ada@example.com",
+  "phone": "(11) 99999-1234",
+  "document": "123.456.789-00",
+  "birthDate": "1990-03-15",
+  "city": "São Paulo, SP",
+  "status": "Ativo"
 }
 ```
 
-O campo `email` deve ser único e validado como endereço de e-mail. Campos desconhecidos e payloads inválidos são rejeitados por `class-validator` antes de chegar ao serviço.
+O campo `email` é validado como endereço de e-mail. Os campos complementares são opcionais para manter compatibilidade com clientes que enviam somente nome e e-mail; quando ausentes, a API retorna valores vazios e situação `Ativo`. Campos desconhecidos e payloads inválidos são rejeitados por `class-validator` antes de chegar ao serviço.
+
+## Aplicação web
+
+A aplicação web solicita um token Auth0 para `VITE_AUTH0_AUDIENCE` e envia-o como bearer token para os endpoints `/api/people`. Defina `VITE_API_URL` somente se a API estiver publicada em outro caminho; por padrão, o navegador usa `/api`. Em desenvolvimento, o servidor Vite encaminha `/api` para `http://127.0.0.1:3000` (ajustável com `VITE_API_PROXY_TARGET`). Em produção, encaminhe `/api` para a API no proxy/reverse proxy da aplicação.

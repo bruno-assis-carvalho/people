@@ -37,6 +37,35 @@ test("rejects unknown request properties", async () => {
   );
 });
 
+test("accepts full web person data while keeping its detail fields optional", async () => {
+  const fullPayloadErrors = await validatePayload({
+    name: "Ada Lovelace",
+    email: "ada@example.com",
+    phone: "555-0100",
+    document: "123.456.789-00",
+    birthDate: "1990-03-15",
+    city: "London",
+    status: "Ativo",
+  });
+  const legacyPayloadErrors = await validatePayload({
+    name: "Ada Lovelace",
+    email: "ada@example.com",
+  });
+
+  assert.deepEqual(fullPayloadErrors, []);
+  assert.deepEqual(legacyPayloadErrors, []);
+});
+
+test("rejects unsupported person statuses", async () => {
+  const errors = await validatePayload({
+    name: "Ada Lovelace",
+    email: "ada@example.com",
+    status: "Pending",
+  });
+
+  assert.equal(errors.some((error) => error.property === "status"), true);
+});
+
 test("validates a person response with the shared DTO", async () => {
   const errors = await validate(
     plainToInstance(PersonResponse, {

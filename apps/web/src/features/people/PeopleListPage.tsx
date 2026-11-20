@@ -5,6 +5,7 @@ import {
   ContentCard,
   EmptyState,
   ListTemplate,
+  LoadingState,
   SearchField,
   Status,
 } from "@ui"
@@ -13,7 +14,7 @@ import { usePeople } from "./PeopleProvider"
 const PAGE_SIZE = 20
 
 export default function PeopleListPage() {
-  const { people } = usePeople()
+  const { people, isLoading } = usePeople()
   const navigate = useNavigate()
   const [query, setQuery] = useState("")
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
@@ -34,6 +35,8 @@ export default function PeopleListPage() {
     setVisibleCount(PAGE_SIZE)
     setQuery(nextQuery)
   }
+
+  if (isLoading) return <LoadingState label="Carregando pessoas…" />
 
   return (
     <ListTemplate
