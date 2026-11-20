@@ -7,8 +7,8 @@
     "dev": "nodemon --watch src --ext ts --exec \"npm run build && node --import ./dist/instrumentation.js ./dist/server.js\"",
     "build": "tsc",
     "start": "node --import ./dist/instrumentation.js dist/server.js",
-    "prebuild": "npm run build --workspace=@genesis/interfaces",
-    "pretest": "npm run build --workspace=@genesis/interfaces",
+    "prebuild": "npm run build --workspace=@people/interfaces",
+    "pretest": "npm run build --workspace=@people/interfaces",
     "test": "tsx --test src/shared/middlewares/error-handler.test.ts src/features/people/people.validation.test.ts src/shared/auth/authentication.test.ts src/observability/trace.decorator.test.ts src/observability/observe.decorator.test.ts"
   },
   "keywords": [],
@@ -16,7 +16,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@genesis/interfaces": "*",
+    "@people/interfaces": "*",
     "@opentelemetry/api": "^1.9.1",
     "@opentelemetry/auto-instrumentations-node": "^0.80.0",
     "@opentelemetry/exporter-metrics-otlp-proto": "^0.222.0",

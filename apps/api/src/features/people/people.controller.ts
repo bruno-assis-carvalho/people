@@ -16,7 +16,7 @@ import {
   PeopleErrorResponse as ErrorResponse,
   PersonResponse,
   UpdatePersonRequest,
-} from "@genesis/interfaces";
+} from "@people/interfaces";
 import { PeopleService } from "./people.service";
 import { AppError } from "../../shared/errors/app-error";
 import { Observe } from "../../observability/observe.decorator";

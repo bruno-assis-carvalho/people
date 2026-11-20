@@ -5,11 +5,10 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "baseUrl": ".",
+    "moduleResolution": "bundler",   
     "paths": {
       "@/*": ["./src/*"],
-      "@ui": ["./packages/ui/src/index.ts"]
+      "@ui": ["../../packages/ui/src/index.ts"]
     },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -20,5 +19,5 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "packages/ui", "vite.config.ts"]
+  "include": ["src", "../../packages/ui", "vite.config.ts"]
 }

@@ -3,7 +3,7 @@ import type {
   CreatePersonRequest,
   PersonResponse,
   UpdatePersonRequest,
-} from "@genesis/interfaces";
+} from "@people/interfaces";
 import { PersonModel } from "./people.model";
 import { TraceMethod } from "../../observability/trace.decorator";
 

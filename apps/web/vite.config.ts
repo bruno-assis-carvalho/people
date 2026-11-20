@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
   const emitSourcemaps = mode === "development"
   const aliases = {
     "@": path.resolve(__dirname, "./src"),
-    "@ui": path.resolve(__dirname, "./packages/ui/src/index.ts"),
+    "@ui": path.resolve(__dirname, "../../packages/ui/src/index.ts"),
   }
 
   if (process.env.PEOPLE_E2E === "true") {

@@ -3,7 +3,7 @@ import test from "node:test";
 import "reflect-metadata";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
-import { CreatePersonRequest, PersonResponse } from "@genesis/interfaces";
+import { CreatePersonRequest, PersonResponse } from "@people/interfaces";
 
 const validatePayload = (payload: Record<string, unknown>) =>
   validate(plainToInstance(CreatePersonRequest, payload), {
