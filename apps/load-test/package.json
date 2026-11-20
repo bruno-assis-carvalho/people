@@ -2,14 +2,16 @@
   "name": "@repo/load-test",
   "private": true,
   "scripts": {
-    "generate:data": "tsx src/generators/seed-factory.ts",
-    "seed:e2e": "npm run generate:data && gatling run --sources-folder src/simulations --simulation seed",
-    "load:api": "gatling run --sources-folder src/simulations --simulation api-load",
-    "load:web": "gatling run --sources-folder src/simulations --simulation web-smoke",
+    "generate:manifest": "npm run build --workspace=@people/mocks && node --env-file-if-exists=.env --import tsx src/generators/seed-manifest.ts",
+    "seed": "node --env-file-if-exists=.env --import tsx src/run-gatling.ts seed",
+    "seed:e2e": "npm run seed",
+    "load:api": "node --env-file-if-exists=.env --import tsx src/run-gatling.ts api-load",
+    "load:web": "node --env-file-if-exists=.env --import tsx src/run-gatling.ts web-smoke",
+    "test": "node --import tsx --test src/auth/authentication.test.ts",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.0.0",
+    "@people/mocks": "*",
     "@gatling.io/core": "latest",
     "@gatling.io/http": "latest"
   },

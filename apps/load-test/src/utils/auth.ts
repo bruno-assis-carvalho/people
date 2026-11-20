@@ -1,27 +1,13 @@
-export interface AuthConfig {
-  authToken?: string;
-  authEmail: string;
-  authPassword: string;
-  auth0Domain?: string;
-  auth0Audience?: string;
-  auth0ClientId?: string;
-  auth0ClientSecret?: string;
-}
+import { getEnvironmentVariable } from "@gatling.io/core";
 
-export const requireAuthConfiguration = (config: AuthConfig): void => {
-  if (config.authToken) {
-    return;
-  }
+export const requireLoadTestToken = (): string => {
+  const token = getEnvironmentVariable("LOAD_TEST_TOKEN", "").trim();
 
-  const missing = [
-    ["AUTH0_DOMAIN", config.auth0Domain],
-    ["AUTH0_AUDIENCE", config.auth0Audience],
-    ["AUTH0_CLIENT_ID", config.auth0ClientId],
-  ].filter(([, value]) => !value).map(([name]) => name);
-
-  if (missing.length > 0) {
+  if (!token) {
     throw new Error(
-      `Set AUTH_TOKEN, or set ${missing.join(", ")} plus AUTH_EMAIL and AUTH_PASSWORD for password-grant authentication.`,
+      "No Auth0 token was provided. Start simulations through the load-test workspace scripts.",
     );
   }
+
+  return token;
 };

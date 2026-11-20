@@ -6,9 +6,11 @@ import {
 } from "@gatling.io/core";
 import { http } from "@gatling.io/http";
 import { loadEnv } from "../config/env";
+import { requireLoadTestToken } from "../utils/auth";
 
 export default simulation((setUp) => {
   const env = loadEnv();
+  requireLoadTestToken();
   const protocol = http
     .baseUrl(env.webUrl)
     .acceptHeader("text/html,application/xhtml+xml")

@@ -1,0 +1,11 @@
+{
+  "name": "@people/mocks",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && tsc --project tsconfig.esm.json"
+  }
+}
